@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/title"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="完善个人信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_below="@+id/title"
+        android:id="@+id/userTruenamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="20dp">
+
+        <EditText
+            android:id="@+id/userTruename"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入昵称"
+          />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_below="@+id/userTruenamelayout"
+        android:id="@+id/userNicknamelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp">
+        <EditText
+            android:id="@+id/userNickname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入您的真实姓名"
+           />
+    </android.support.design.widget.TextInputLayout>
+<RelativeLayout
+    android:layout_below="@+id/userNicknamelayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_centerInParent="true"
+        android:id="@+id/submit"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+         android:text="确认"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:visibility="invisible"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="取消"
+        android:id="@+id/cancel"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+</RelativeLayout>

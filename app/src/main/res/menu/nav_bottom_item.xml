@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_news"
+        android:icon="@drawable/news"
+        android:title="新闻" />
+    <item
+        android:id="@+id/item_lib"
+        android:icon="@drawable/books"
+        android:title="图书" />
+    <!--<item-->
+        <!--android:id="@+id/item_find"-->
+        <!--android:icon="@drawable/find"-->
+        <!--android:title="发现" />-->
+    <!--<item-->
+        <!--android:id="@+id/item_more"-->
+        <!--android:icon="@drawable/info"-->
+        <!--android:title="更多" />-->
+
+
+</menu>

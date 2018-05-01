@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_person"
+            android:icon="@drawable/ic_accessibility_black_24dp"
+            android:title="个人信息"></item>
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="账户管理"></item>
+        <item
+            android:id="@+id/nav_pay"
+            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:title="支付信息管理"></item>
+        <item
+            android:id="@+id/nav_venuesactivity"
+            android:icon="@drawable/ic_event_seat_black_24dp"
+            android:title="场馆活动管理"></item>
+        <item
+            android:id="@+id/nav_usercustomact"
+            android:icon="@drawable/ic_brush_black_24dp"
+            android:title="创建自定义活动"></item>
+        <item
+            android:id="@+id/nav_usercustomactmanager"
+            android:icon="@drawable/ic_pregnant_woman_black_24dp"
+            android:title="自定义活动管理"></item>
+        <item
+            android:id="@+id/nav_joincustomeract"
+            android:icon="@drawable/ic_folder_black_24dp"
+            android:title="参加自定义活动管理"></item>
+    </group>
+</menu>

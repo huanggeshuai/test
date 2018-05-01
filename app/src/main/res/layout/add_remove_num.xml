@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+
+    >
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/ic_remove_black_24dp" />
+
+    <TextView
+        android:id="@+id/num"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@+id/remove"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@+id/num"
+        android:background="@drawable/ic_add_black_24dp" />
+</RelativeLayout>

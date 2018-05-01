@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.huang.test">
+
+    <!-- 读取设备信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 指纹识别 -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <!-- 危险权限 读取电话信息 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 危险权限 定位 -->
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问网络，网络定位需要上网 -->
+
+
+    <!-- 危险权限 读取写入手机内存 -->
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 危险权限 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- 摄像头 -->
+    <!-- Permission to vibrate - recommended, allows vibration feedback on scan -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Permission to use camera - required -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Camera features - recommended -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="410f28627ea4badf3b5033960bdc19d3">
+            <service android:name="com.amap.api.location.APSService" />
+        </meta-data>
+
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.Main2Activity" />
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ResignActivity" />
+        <activity android:name=".activity.ForgetPAsswordActivity" />
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity
+            android:name=".activity.VenuesinfoActivity"
+            android:theme="@style/venuesinfo" />
+        <activity android:name=".activity.AccountCardActivity" />
+
+        <!-- Activities responsible for gathering payment info -->
+        <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
+        <activity android:name=".activity.OrderAndAllocationActivity" />
+        <activity android:name=".activity.AccountActivity" />
+        <activity
+            android:name=".activity.RechargeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.PayActivity" />
+        <activity android:name=".activity.VenuesActivity" />
+        <activity android:name=".activity.VenuesCommentActivity" />
+        <activity android:name=".activity.UserCustomActivity" />
+        <activity android:name=".activity.UserCustomerManagerActivity" />
+        <activity
+            android:name=".activity.UserParticipateCustomerActivity"
+            android:theme="@style/venuesinfo" />
+        <activity android:name=".activity.UserjoinCustomerActivity"></activity>
+    </application>
+
+</manifest>

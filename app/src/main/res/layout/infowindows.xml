@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/win"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/line0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/title"
+            android:text="徐州市金陵苏源大酒店"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/line1"
+        android:layout_below="@+id/line0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/address"
+            android:text="徐州市金陵苏源大酒店"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/daohang"
+            android:background="@drawable/ic_navigation_black_24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/line1"
+        android:gravity="center"
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/phone"
+            android:text="徐州市金陵苏源大酒店"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/callphone"
+            android:background="@drawable/ic_phone_black_24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+    </LinearLayout>
+</RelativeLayout>

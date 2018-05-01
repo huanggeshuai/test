@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="第一个页面"-->
+    <!--/>-->
+    <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/fig"-->
+    <!--android:text="测试指纹"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/text"-->
+    <!--/>-->
+    <!--<yanzhikai.textpath.SyncTextPathView-->
+    <!--android:id="@+id/stpv_2017"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:duration="12000"-->
+    <!--app:showPainter="true"-->
+    <!--app:text="2017"-->
+    <!--app:textInCenter="true"-->
+    <!--app:textSize="60sp"-->
+    <!--android:layout_weight="1"-->
+    <!--/>-->
+
+    <!--<yanzhikai.textpath.AsyncTextPathView-->
+    <!--android:id="@+id/atpv_1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:duration="6000"-->
+    <!--app:showPainter="true"-->
+    <!--app:text="huangge666"-->
+
+    <!--app:textInCenter="true"-->
+    <!--app:textSize="62sp"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--/>-->
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+
+        android:id="@+id/infofresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/infovenues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>
