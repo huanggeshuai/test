@@ -2,7 +2,6 @@ package com.example.huang.test.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,13 +12,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,16 +25,11 @@ import com.example.huang.test.R;
 import com.example.huang.test.dialog.EditName;
 import com.example.huang.test.entity.JsonInfo;
 import com.example.huang.test.entity.User;
-import com.example.huang.test.fragment.Frag1;
-import com.example.huang.test.fragment.Frag2;
 import com.example.huang.test.fragment.Frag3;
-import com.example.huang.test.fragment.Frag4;
 import com.example.huang.test.fragment.Frag5;
-import com.example.huang.test.fragment.Frag6;
 import com.example.huang.test.net.Controller;
 import com.example.huang.test.utils.Dopost;
 import com.example.huang.test.utils.GsonBuilderUtil;
-import com.example.huang.test.utils.Payutils;
 import com.example.huang.test.utils.StataCode;
 import com.google.gson.Gson;
 
@@ -47,11 +39,11 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     User user;
     FrameLayout fragment;
+    View view;
     private Fragment[] fragments;
     private int lastShowFragment = 0;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    View view;
     private BottomNavigationView.OnNavigationItemSelectedListener clic
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -87,6 +79,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
+    };
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            Gson gson = GsonBuilderUtil.create();
+            JsonInfo jsonInfo = new JsonInfo();
+            switch (msg.what) {
+                case StataCode.net_faile:
+                    Toast.makeText(MainActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
+                    break;
+                case StataCode.getUserinfo:
+                    jsonInfo = gson.fromJson(bundle.getString("userinfo"), JsonInfo.class);
+                    user = gson.fromJson(jsonInfo.getMsg(), User.class);
+                    TextView username = view.findViewById(R.id.username);
+                    TextView email = view.findViewById(R.id.emil);
+                    username.setText(user.getUserNickname());
+                    email.setText(user.getUserEmail());
+                    break;
+            }
+        }
     };
 
     @Override
@@ -193,7 +206,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("user",user);
                 startActivity(intent);
                 drawerLayout.closeDrawers();
-                break; case R.id.nav_joincustomeract:
+                break;
+            case R.id.nav_joincustomeract:
                 intent=new Intent(MainActivity.this,UserjoinCustomerActivity.class);
                 intent.putExtra("user",user);
                 startActivity(intent);
@@ -217,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
     void GetUserinfo(){
         new Thread(new Runnable() {
             @Override
@@ -247,25 +262,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }).start();
     }
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            Gson gson = GsonBuilderUtil.create();
-            JsonInfo jsonInfo = new JsonInfo();
-            switch (msg.what){
-                case StataCode.net_faile:
-                    Toast.makeText(MainActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
-                    break;
-                case StataCode.getUserinfo:
-                    jsonInfo=gson.fromJson(bundle.getString("userinfo"), JsonInfo.class);
-                     user=gson.fromJson(jsonInfo.getMsg(),User.class);
-                    TextView username= view.findViewById(R.id.username);
-                    TextView email= view.findViewById(R.id.emil);
-                    username.setText(user.getUserNickname());
-                    email.setText(user.getUserEmail());
-                    break;
-            }
-        }
-    };
 }

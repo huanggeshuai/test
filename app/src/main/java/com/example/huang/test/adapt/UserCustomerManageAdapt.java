@@ -2,6 +2,7 @@ package com.example.huang.test.adapt;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.huang.test.R;
+import com.example.huang.test.activity.CheckUserCustomer;
 import com.example.huang.test.entity.UserCustomActivity;
 import com.example.huang.test.utils.PayUserCustomerManager;
 import com.example.huang.test.utils.TimeUtils;
@@ -55,6 +58,19 @@ public class UserCustomerManageAdapt extends RecyclerView.Adapter<UserCustomerMa
                         }
                     }
                 });
+            }
+        });
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (participateVenuesActivitieys.get(viewHolder.getAdapterPosition()).getAuditing() == 0) {
+                    Toast.makeText(context, "该场馆还没有审核,不能查看", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(context, CheckUserCustomer.class);
+                    intent.putExtra("participateVenuesActivitieys", participateVenuesActivitieys.get(viewHolder.getAdapterPosition()));
+                    context.startActivity(intent);
+                }
+
             }
         });
         return viewHolder;

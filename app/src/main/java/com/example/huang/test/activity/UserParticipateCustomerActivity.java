@@ -3,15 +3,14 @@ package com.example.huang.test.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,8 +18,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.huang.test.R;
-import com.example.huang.test.adapt.CommentAdapt;
-import com.example.huang.test.entity.*;
+import com.example.huang.test.entity.JsonInfo;
+import com.example.huang.test.entity.Orders;
+import com.example.huang.test.entity.User;
 import com.example.huang.test.entity.UserCustomActivity;
 import com.example.huang.test.net.Controller;
 import com.example.huang.test.net.Ip;
@@ -31,13 +31,11 @@ import com.example.huang.test.utils.Payutils;
 import com.example.huang.test.utils.StataCode;
 import com.example.huang.test.utils.TimeUtils;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 import info.hoang8f.widget.FButton;
 
 public class UserParticipateCustomerActivity extends AppCompatActivity {
@@ -51,6 +49,52 @@ public class UserParticipateCustomerActivity extends AppCompatActivity {
     User user;
     AddAndRemoveAndNum pick;
     BigDecimal TotalPrice;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            Gson gson = GsonBuilderUtil.create();
+            JsonInfo jsonInfo = new JsonInfo();
+            switch (msg.what) {
+                case StataCode.net_faile:
+                    Toast.makeText(UserParticipateCustomerActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
+                    break;
+                case StataCode.getUserinfo:
+                    jsonInfo = gson.fromJson(bundle.getString("userinfo"), JsonInfo.class);
+                    user = gson.fromJson(jsonInfo.getMsg(), User.class);
+                    if (TotalPrice.compareTo(user.getUserBalance()) > 0) {
+                        showdialog();
+                    } else {
+                        JoinActivityThread();
+                    }
+                    // Toast.makeText(OrderAndAllocationActivity.this, TotalPrice+"", Toast.LENGTH_SHORT).show();
+                    break;
+                case StataCode.joinactivity:
+                    jsonInfo = gson.fromJson(bundle.getString("info"), JsonInfo.class);
+                    if (jsonInfo.isSuccess()) {
+                        id = Integer.parseInt(jsonInfo.getMsg());
+                        Pay();
+                    } else {
+                        Toast.makeText(UserParticipateCustomerActivity.this, jsonInfo.getMsg(), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case StataCode.joineditactivity:
+                    jsonInfo = gson.fromJson(bundle.getString("info"), JsonInfo.class);
+                    if (jsonInfo.isSuccess()) {
+                        userCustomActivity.setEnlistnum(personnum + userCustomActivity.getEnlistnum());
+                        Toast.makeText(UserParticipateCustomerActivity.this, "预约成功", Toast.LENGTH_SHORT).show();
+                        enlistnumber.setText(userCustomActivity.getEnlistnum() + "/" + userCustomActivity.getTotal());
+
+                    } else {
+                        Toast.makeText(UserParticipateCustomerActivity.this, jsonInfo.getMsg(), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case StataCode.getComment:
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +115,6 @@ public class UserParticipateCustomerActivity extends AppCompatActivity {
                     } else {
                         if(personnum==0){
                             Toast.makeText(UserParticipateCustomerActivity.this,"选择报名人数",Toast.LENGTH_SHORT).show();
-
                         }else
                         GetUserinfo();
                     }
@@ -82,6 +125,7 @@ public class UserParticipateCustomerActivity extends AppCompatActivity {
             }
         });
     }
+
     void init(){
         pick=(AddAndRemoveAndNum) findViewById(R.id.pick);
         submit=(FButton) findViewById(R.id.submit);
@@ -170,51 +214,7 @@ public class UserParticipateCustomerActivity extends AppCompatActivity {
             }
         }).start();
     }
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            Gson gson = GsonBuilderUtil.create();
-            JsonInfo jsonInfo = new JsonInfo();
-            switch (msg.what){
-                case StataCode.net_faile:
-                    Toast.makeText(UserParticipateCustomerActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
-                    break;
-                case StataCode.getUserinfo:
-                    jsonInfo=gson.fromJson(bundle.getString("userinfo"), JsonInfo.class);
-                    user=gson.fromJson(jsonInfo.getMsg(),User.class);
-                    if(TotalPrice.compareTo(user.getUserBalance())>0){
-                        showdialog();
-                    }else{
-                        JoinActivityThread();
-                    }
-                    // Toast.makeText(OrderAndAllocationActivity.this, TotalPrice+"", Toast.LENGTH_SHORT).show();
-                    break;
-                case StataCode.joinactivity:
-                    jsonInfo=gson.fromJson(bundle.getString("info"), JsonInfo.class);
-                    if(jsonInfo.isSuccess()){
-                        id=Integer.parseInt(jsonInfo.getMsg());
-                        Pay();
-                    }else{
-                        Toast.makeText(UserParticipateCustomerActivity.this,jsonInfo.getMsg(), Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case StataCode.joineditactivity:
-                    jsonInfo=gson.fromJson(bundle.getString("info"), JsonInfo.class);
-                    if(jsonInfo.isSuccess()){
-                        userCustomActivity.setEnlistnum(personnum+userCustomActivity.getEnlistnum());
-                        Toast.makeText(UserParticipateCustomerActivity.this,"预约成功", Toast.LENGTH_SHORT).show();
-                        enlistnumber.setText(userCustomActivity.getEnlistnum()+"/"+userCustomActivity.getTotal());
 
-                    }else{
-                        Toast.makeText(UserParticipateCustomerActivity.this,jsonInfo.getMsg(), Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case StataCode.getComment:
-                    break;
-            }
-        }
-    };
     void showdialog(){
         final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
         dialog.setTitle("用户您好");
