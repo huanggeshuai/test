@@ -103,7 +103,8 @@
         <activity
             android:name=".activity.UserParticipateCustomerActivity"
             android:theme="@style/venuesinfo" />
-        <activity android:name=".activity.UserjoinCustomerActivity"></activity>
+        <activity android:name=".activity.UserjoinCustomerActivity" />
+        <activity android:name=".activity.CheckUserCustomer"></activity>
     </application>
 
 </manifest>
