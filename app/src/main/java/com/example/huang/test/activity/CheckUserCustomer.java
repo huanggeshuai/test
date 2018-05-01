@@ -207,7 +207,6 @@ public class CheckUserCustomer extends AppCompatActivity {
             }
         }).start();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
