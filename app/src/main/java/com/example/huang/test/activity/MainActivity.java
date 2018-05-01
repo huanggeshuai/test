@@ -3,6 +3,7 @@ package com.example.huang.test.activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -174,9 +175,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_person:
-                drawerLayout.closeDrawers();
-                break;
             case R.id.nav_account:
                 Intent intent=new Intent(MainActivity.this,AccountActivity.class);
                 intent.putExtra("user",user);
@@ -212,6 +210,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("user",user);
                 startActivity(intent);
                 drawerLayout.closeDrawers();
+                break;
+            case R.id.switch_account:
+//                intent=new Intent(MainActivity.this,UserjoinCustomerActivity.class);
+//                intent.putExtra("user",user);
+//                startActivity(intent);
+//                drawerLayout.closeDrawers();
+                SharedPreferences.Editor editor = getSharedPreferences("logininfo", MODE_PRIVATE).edit();
+                editor.clear().commit();
+                SharedPreferences.Editor editorpass = getSharedPreferences("finger", MODE_PRIVATE).edit();
+                editorpass.clear().commit();
+                intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
         return true;

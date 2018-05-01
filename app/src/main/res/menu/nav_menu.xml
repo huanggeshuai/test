@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_person"
-            android:icon="@drawable/ic_accessibility_black_24dp"
-            android:title="个人信息"></item>
+        <!--<item-->
+        <!--android:id="@+id/nav_person"-->
+        <!--android:icon="@drawable/ic_accessibility_black_24dp"-->
+        <!--android:title="个人信息"></item>-->
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_account_circle_black_24dp"
@@ -29,5 +29,9 @@
             android:id="@+id/nav_joincustomeract"
             android:icon="@drawable/ic_folder_black_24dp"
             android:title="参加自定义活动管理"></item>
+        <item
+            android:id="@+id/switch_account"
+            android:icon="@drawable/ic_swap_horiz_black_24dp"
+            android:title="切换账号"></item>
     </group>
 </menu>
