@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.huang.test.R;
-import com.example.huang.test.adapt.JoinCustomerActAdapt;
+import com.example.huang.test.adapt.Checkadapt;
 import com.example.huang.test.entity.DataGrid;
 import com.example.huang.test.entity.ParticipateActivitiesUser;
 import com.example.huang.test.entity.User;
@@ -46,7 +46,7 @@ public class CheckUserCustomer extends AppCompatActivity {
     int page = 1;
     int currentpage;
     AsyncTextPathView info;
-    JoinCustomerActAdapt userCustomerManageAdapt;
+    Checkadapt userCustomerManageAdapt;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -72,7 +72,7 @@ public class CheckUserCustomer extends AppCompatActivity {
                         infovenuesactivity.setVisibility(View.VISIBLE);
                         info.setVisibility(View.GONE);
                     }
-                    userCustomerManageAdapt = new JoinCustomerActAdapt(userCustomActivities, getFragmentManager());
+                    userCustomerManageAdapt = new Checkadapt(userCustomActivities, getFragmentManager());
                     infovenuesactivity.setAdapter(userCustomerManageAdapt);
                     infofresh.finishRefresh();
                     infofresh.finishLoadMore();

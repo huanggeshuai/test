@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class UserCustomerManageAdapt extends RecyclerView.Adapter<UserCustomerMa
         if(context==null){
             context=parent.getContext();
         }
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.venuesactivityitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_customer_manage_item, parent, false);
         final
         ViewHolder viewHolder=new ViewHolder(view);
         viewHolder.order.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +71,6 @@ public class UserCustomerManageAdapt extends RecyclerView.Adapter<UserCustomerMa
                     intent.putExtra("participateVenuesActivitieys", participateVenuesActivitieys.get(viewHolder.getAdapterPosition()));
                     context.startActivity(intent);
                 }
-
             }
         });
         return viewHolder;
@@ -109,6 +109,11 @@ public class UserCustomerManageAdapt extends RecyclerView.Adapter<UserCustomerMa
             holder.order.setText("未缴费");
             holder.order.setClickable(true);
             holder.order.setTextColor(Color.parseColor("#388E3C"));
+        }
+        if (TextUtils.isEmpty(pv.getCause())) {
+            holder.finishtime.setText("无");
+        } else {
+            holder.finishtime.setText(pv.getCause());
         }
     }
 
