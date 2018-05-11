@@ -101,7 +101,7 @@ public class UserCustomerManageAdapt extends RecyclerView.Adapter<UserCustomerMa
         }else if(pv.getPayState()==0) {
             holder.activitystate.setText("未支付");
         }
-        if(pv.getAuditing()==1){
+        if (pv.getPayState() == 1) {
             holder.order.setText("已缴费");
             holder.order.setClickable(false);
             holder.order.setTextColor(Color.parseColor("#0097A7"));

@@ -1,12 +1,12 @@
 package com.example.huang.test.activity;
 
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import com.example.huang.test.R;
 import com.example.huang.test.adapt.UserCustomerManageAdapt;
-import com.example.huang.test.entity.*;
+import com.example.huang.test.entity.DataGrid;
+import com.example.huang.test.entity.User;
 import com.example.huang.test.entity.UserCustomActivity;
 import com.example.huang.test.net.Controller;
 import com.example.huang.test.utils.Dopost;
@@ -42,12 +43,52 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
     int page=1;
     int currentpage;
     UserCustomerManageAdapt userCustomerManageAdapt;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            Gson gson = GsonBuilderUtil.create();
+            DataGrid<UserCustomActivity> dataGrid;
+            switch (msg.what) {
+                case StataCode.net_faile:
+                    infofresh.finishRefresh();
+                    infofresh.finishLoadMore();
+                    Toast.makeText(UserCustomerManagerActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
+                    break;
+                case StataCode.net_success:
+                    dataGrid = gson.fromJson(bundle.getString("info"),
+                            new TypeToken<DataGrid<UserCustomActivity>>() {
+                            }.getType());
+                    userCustomActivities.addAll(dataGrid.getRows());
+                    userCustomerManageAdapt = new UserCustomerManageAdapt(getFragmentManager(), userCustomActivities);
+                    infovenuesactivity.setAdapter(userCustomerManageAdapt);
+                    infofresh.finishRefresh();
+                    infofresh.finishLoadMore();
+                    break;
+                case StataCode.getmore:
+                    dataGrid = null;
+
+                    dataGrid = gson.fromJson(bundle.getString("info"), new TypeToken<DataGrid<UserCustomActivity>>() {
+                    }.getType());
+                    if (dataGrid.getRows().size() == 0) {
+                        Toast.makeText(UserCustomerManagerActivity.this, "没有数据了，不要在拉了", Toast.LENGTH_SHORT).show();
+                        page = currentpage;
+                    }
+                    userCustomActivities.addAll(dataGrid.getRows());
+                    infofresh.finishRefresh();
+                    infofresh.finishLoadMore();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_customer_manager);
         init();
     }
+
     void init(){
         user=(User)getIntent().getSerializableExtra("user");
         infofresh=(SmartRefreshLayout) findViewById(R.id.infofresh);
@@ -83,6 +124,7 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
         });
         getVenureactivityThread(1);
     }
+
     void getVenureactivityThread(final int page){
         new Thread(new Runnable() {
             @Override
@@ -94,7 +136,7 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
 //                map.put("sort", "time");
                 map.put("page", page);
                 map.put("order", "desc");
-                map.put("sort", "createtime");
+                map.put("sort", "activitiesSettingTime");
                 Bundle bundle=new Bundle();
                 String mes=null;
                 try {
@@ -117,6 +159,7 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     void getinfomore(final int page){
         new Thread(new Runnable() {
             @Override
@@ -128,7 +171,7 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
 //                map.put("sort", "time");
                 map.put("page", page);
                 map.put("order", "desc");
-                map.put("sort", "createtime");
+                map.put("sort", "activitiesSettingTime");
                 Bundle bundle=new Bundle();
                 String mes=null;
                 try {
@@ -151,44 +194,7 @@ public class UserCustomerManagerActivity extends AppCompatActivity {
             }
         }).start();
     }
-    private Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            Gson gson = GsonBuilderUtil.create();
-            DataGrid<UserCustomActivity> dataGrid ;
-            switch (msg.what){
-                case StataCode.net_faile:
-                    infofresh.finishRefresh();
-                    infofresh.finishLoadMore();
-                    Toast.makeText(UserCustomerManagerActivity.this, "网络超时，请重试", Toast.LENGTH_SHORT).show();
-                    break;
-                case StataCode.net_success:
-                    dataGrid=gson.fromJson(bundle.getString("info"),
-                            new TypeToken<DataGrid<UserCustomActivity>>() {
-                    }.getType());
-                    userCustomActivities.addAll(dataGrid.getRows());
-                    userCustomerManageAdapt=new UserCustomerManageAdapt(getFragmentManager(),userCustomActivities);
-                    infovenuesactivity.setAdapter(userCustomerManageAdapt);
-                    infofresh.finishRefresh();
-                    infofresh.finishLoadMore();
-                    break;
-                case StataCode.getmore:
-                    dataGrid = null;
 
-                    dataGrid=gson.fromJson(bundle.getString("info"), new TypeToken<DataGrid<ParticipateVenuesActivitiey>>() {
-                    }.getType());
-                    if (dataGrid.getRows().size() == 0) {
-                        Toast.makeText(UserCustomerManagerActivity.this, "没有数据了，不要在拉了", Toast.LENGTH_SHORT).show();
-                        page = currentpage;
-                    }
-                    userCustomActivities.addAll(dataGrid.getRows());
-                    infofresh.finishRefresh();
-                    infofresh.finishLoadMore();
-                    break;
-            }
-        }
-    };
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

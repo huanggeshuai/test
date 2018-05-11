@@ -26,11 +26,11 @@ public class MyWindowsInfo implements AMap.InfoWindowAdapter,View.OnClickListene
     ImageView daohang,callphone;
     String title;
     String add,pho;
-    private LatLng latLng;
     Context context;
     Collections collections;
     RelativeLayout win;
     Integer userid;
+    private LatLng latLng;
     public MyWindowsInfo(Context context) {
         this.context = context;
     }
@@ -61,9 +61,9 @@ public class MyWindowsInfo implements AMap.InfoWindowAdapter,View.OnClickListene
         View view= LayoutInflater.from(context).inflate(R.layout.infowindows,null);
        win=view.findViewById(R.id.win);
         win.setOnClickListener(this);
-        Ttitle =(TextView) view.findViewById(R.id.title);
+        Ttitle = view.findViewById(R.id.title);
         Ttitle.setText(title);
-        address =(TextView) view.findViewById(R.id.address);
+        address = view.findViewById(R.id.address);
         address.setText(add);
         phone=view.findViewById(R.id.phone);
         phone.setText(pho);
@@ -82,15 +82,9 @@ public class MyWindowsInfo implements AMap.InfoWindowAdapter,View.OnClickListene
             case R.id.daohang: //
                 //Toast.makeText(context,"dianji",Toast.LENGTH_SHORT).show();
                  if(istrue()){
-                     Uri uri = Uri.parse("androidamap://navi?sourceApplication=CloudPatient&lat="+latLng.latitude+"&lon="+latLng.longitude+"&dev=1&style=2");
-                     Intent intent = new Intent("android.intent.action.VIEW", uri);
-                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                     context.startActivity(intent);
+                     openGaode();
                  }else {
-                     Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
-                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                     context.startActivity(intent);
+                     downGaode();
                  }
                 break;
             case R.id.callphone:
@@ -108,9 +102,21 @@ public class MyWindowsInfo implements AMap.InfoWindowAdapter,View.OnClickListene
         }
     }
     public boolean istrue(){
-        if(IsInstalled.isAvilible(context,"com.autonavi.minimap"))
-            return true;
-        else return false;
+        return IsInstalled.isAvilible(context, "com.autonavi.minimap");
+    }
+
+    void openGaode() {
+        Uri uri = Uri.parse("androidamap://navi?sourceApplication=CloudPatient&lat=" + latLng.latitude + "&lon=" + latLng.longitude + "&dev=1&style=2");
+        Intent intent = new Intent("android.intent.action.VIEW", uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    void downGaode() {
+        Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
 }

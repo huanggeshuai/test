@@ -67,7 +67,7 @@ public class Frag5 extends Fragment {
         tableLayout.setupWithViewPager(viewPager);
         // TabLayout指示器添加文本
         //  tableLayout.getTabAt(0).setText("头条");
-        tableLayout.getTabAt(1).setText("用户活动");
+        tableLayout.getTabAt(1).setText("地图显示");
         //  tableLayout.getTabAt(2).setText("娱乐");
         tableLayout.getTabAt(0).setText("场馆活动");
     }
